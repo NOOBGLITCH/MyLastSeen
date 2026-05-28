@@ -432,9 +432,107 @@ curl https://mylastseen.vercel.app/api/health
   "success": true,
   "status": "healthy",
   "name": "MyLastSeen",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "uptime": 3600,
   "cache": { "hits": 42, "misses": 10, "keys": ["Shineii86"], "ttl": 300 }
+}
+```
+
+### `GET /api/batch?users=user1,user2`
+
+Fetch last-seen data for up to 10 users in a single request.
+
+```bash
+curl https://mylastseen.vercel.app/api/batch?users=Shineii86,torvalds
+```
+
+```json
+{
+  "success": true,
+  "data": [
+    { "username": "Shineii86", "lastSeen": "2026-05-28T00:56:24Z", "relativeTime": "19 minutes ago" },
+    { "username": "torvalds", "lastSeen": "2026-05-26T23:41:14Z", "relativeTime": "1 day ago" }
+  ],
+  "meta": { "count": 2, "responseTime": "662ms" }
+}
+```
+
+### `GET /api/score/:username`
+
+Computes activity score (0-100) based on recency and frequency.
+
+```bash
+curl https://mylastseen.vercel.app/api/score/Shineii86
+```
+
+```json
+{
+  "success": true,
+  "data": { "username": "Shineii86", "score": 100, "grade": "S", "breakdown": { "recency": 50, "frequency": 50 } }
+}
+```
+
+### `GET /api/history/:username`
+
+Returns the last 10 public events as a timeline.
+
+```bash
+curl https://mylastseen.vercel.app/api/history/Shineii86
+```
+
+```json
+{
+  "success": true,
+  "data": {
+    "username": "Shineii86",
+    "eventCount": 10,
+    "timeline": [
+      { "eventType": "PushEvent", "eventLabel": "pushed code", "eventRepo": "Shineii86/MyLastSeen", "timestamp": "2026-05-28T00:56:24Z", "relativeTime": "19 minutes ago" }
+    ]
+  }
+}
+```
+
+### `GET /api/org/:orgname/lastseen`
+
+Fetch all members of a GitHub organization and their last-seen data.
+
+```bash
+curl https://mylastseen.vercel.app/api/org/vercel/lastseen
+```
+
+### `GET /api/compare?user1=X&user2=Y`
+
+Compare two users' last-seen activity side by side.
+
+```bash
+curl https://mylastseen.vercel.app/api/compare?user1=Shineii86&user2=torvalds
+```
+
+```json
+{
+  "success": true,
+  "data": {
+    "user1": { "username": "Shineii86", "relativeTime": "19 minutes ago" },
+    "user2": { "username": "torvalds", "relativeTime": "1 day ago" }
+  },
+  "comparison": { "moreActive": "Shineii86", "lastSeenDiff": "1 day(s)" }
+}
+```
+
+### `GET /api/rate-limit`
+
+Shows remaining GitHub API quota.
+
+```bash
+curl https://mylastseen.vercel.app/api/rate-limit
+```
+
+```json
+{
+  "success": true,
+  "authenticated": false,
+  "core": { "limit": 60, "remaining": 57, "reset": "2026-05-28T01:53:27.000Z" }
 }
 ```
 
