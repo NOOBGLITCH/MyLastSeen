@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [1.0.0] — 2026-05-28
 
+### Fixed
+- Removed emojis and special characters from Mermaid diagram labels to fix GitHub rendering error
+
+## [1.0.0] — 2026-05-28
+
 ### Changed
 - Matched README License & Author sections to AniNewsAPI style — centered license with badge, author banner, large name, social badges (GitHub, Telegram, Instagram, Email), styled footer with copyright
 

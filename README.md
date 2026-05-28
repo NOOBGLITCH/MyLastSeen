@@ -89,13 +89,13 @@
 
 ```mermaid
 flowchart TD
-    A["🌐 Client Request<br/>(Browser / Bot / curl)"] --> B["🛡️ Vercel Edge / Express Server<br/>CORS · Security Headers · Rate Limiting"]
-    B --> C{"💾 Cache Check<br/>(node-cache, 5min TTL)"}
-    C -- HIT --> D["⚡ Return Cached Response<br/>~5ms"]
-    C -- MISS --> E["📡 GitHub Events API<br/>/users/:username/events/public"]
-    E --> F["🔍 Extract Most Recent Event<br/>PushEvent · IssuesEvent · ReleaseEvent · etc."]
-    F --> G["⏱️ Calculate Relative Time<br/>(just now → years ago)"]
-    G --> H["💾 Cache & Respond<br/>JSON · Plain Text · Shields.io Badge"]
+    A["Client Request"] --> B["Vercel Edge / Express Server"]
+    B --> C{"Cache Check"}
+    C -- HIT --> D["Return Cached Response"]
+    C -- MISS --> E["GitHub Events API"]
+    E --> F["Extract Most Recent Event"]
+    F --> G["Calculate Relative Time"]
+    G --> H["Cache and Respond"]
 
     style A fill:#1e1e2e,stroke:#a78bfa,color:#f1f5f9
     style B fill:#1e1e2e,stroke:#6366f1,color:#f1f5f9
@@ -237,11 +237,11 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A["📥 Request"] --> B{"🧠 Memory Cache<br/>(node-cache)"}
-    B -- HIT --> C["⚡ Return Cached<br/>~5ms"]
-    B -- MISS --> D["📡 GitHub Events API<br/>(/users/:username/events/public)"]
-    D --> E["💾 Cache Result<br/>(5min TTL)"]
-    E --> F["📤 Return Fresh"]
+    A["Request"] --> B{"Memory Cache"}
+    B -- HIT --> C["Return Cached"]
+    B -- MISS --> D["GitHub Events API"]
+    D --> E["Cache Result"]
+    E --> F["Return Fresh"]
 
     style A fill:#1e1e2e,stroke:#a78bfa,color:#f1f5f9
     style B fill:#1e1e2e,stroke:#f43f8e,color:#f1f5f9
