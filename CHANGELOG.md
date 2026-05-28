@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 ## [1.0.0] — 2026-05-28
 
 ### Fixed
+- Fixed Vercel routing — API endpoints returning 404 due to incorrect rewrite config
+- Updated vercel.json to use regex capture groups with query params (matching AniNewsAPI pattern)
+- Updated lastseen.js and badge.js handlers to read username from query params instead of route params
+
+## [1.0.0] — 2026-05-28
+
+### Fixed
 - Removed emojis and special characters from Mermaid diagram labels to fix GitHub rendering error
 
 ## [1.0.0] — 2026-05-28

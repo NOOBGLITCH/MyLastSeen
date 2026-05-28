@@ -1,7 +1,8 @@
 {
   "rewrites": [
-    { "source": "/api/lastseen/:username/text", "destination": "/api/lastseen/:username/text" },
-    { "source": "/api/lastseen/:username/badge", "destination": "/api/badge/:username" }
+    { "source": "/api/lastseen/([^/]+)/text", "destination": "/api/lastseen?username=$1&format=text" },
+    { "source": "/api/lastseen/([^/]+)/badge", "destination": "/api/badge?username=$1" },
+    { "source": "/api/lastseen/([^/]+)", "destination": "/api/lastseen?username=$1" }
   ],
   "headers": [
     { "source": "/api/(.*)", "headers": [

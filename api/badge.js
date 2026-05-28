@@ -70,7 +70,7 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') { res.status(204).end(); return; }
 
   try {
-    const username = req.params.username?.trim();
+    const username = req.query.username?.trim();
     const token = req.query.token || process.env.GITHUB_TOKEN || null;
     const forceRefresh = req.query.refresh === 'true';
 
