@@ -18,8 +18,8 @@
   <img src="https://img.shields.io/badge/Express-5.1-000000?style=flat-square&logo=express&logoColor=white" alt="Express"/>
   <img src="https://img.shields.io/badge/Vercel-Serverless-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel"/>
   <img src="https://img.shields.io/badge/License-MIT-22c55e?style=flat-square&logo=mit&logoColor=white" alt="License"/>
-  <img src="https://img.shields.io/badge/Version-1.0.0-f43f8e?style=flat-square&logoColor=white" alt="Version"/>
-  <img src="https://img.shields.io/badge/Endpoints-4-6366f1?style=flat-square&logoColor=white" alt="Endpoints"/>
+  <img src="https://img.shields.io/badge/Version-2.0.0-f43f8e?style=flat-square&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/Endpoints-10-6366f1?style=flat-square&logoColor=white" alt="Endpoints"/>
 </p>
 
 <p align="center">
@@ -84,6 +84,12 @@
 - ⚡ **Smart Caching** — 5-minute in-memory cache to reduce API calls
 - 🔒 **CORS Enabled** — Works from any frontend, no proxy needed
 - 🚀 **Zero-Config Deploy** — One click to Vercel, or run standalone with Express
+- 📦 **Batch Lookup** — Check up to 10 users in a single request
+- 📈 **Activity Score** — 0-100 score with S/A/B/C/D/F grading
+- 🕐 **Event History** — Last 10 events as a timeline
+- 🏢 **Org Tracking** — Track all members of a GitHub organization
+- ⚖️ **User Comparison** — Compare two users side by side
+- 📊 **Rate Limit Dashboard** — Monitor GitHub API quota
 
 ### How It Works
 
@@ -173,6 +179,13 @@ flowchart TD
 | 🔒 CORS Enabled | Works from any origin | ✅ |
 | 🚀 Vercel Ready | Zero-config serverless deployment | ✅ |
 | 🖥️ Express Mode | Standalone server with `npm start` | ✅ |
+| 📦 Batch Lookup | Check up to 10 users in one request | ✅ |
+| 📈 Activity Score | 0-100 score with S/A/B/C/D/F grading | ✅ |
+| 🕐 Event History | Last 10 events as a timeline | ✅ |
+| 🏢 Org Tracking | Track all members of a GitHub org | ✅ |
+| ⚖️ User Comparison | Compare two users side by side | ✅ |
+| 📊 Rate Limit Dashboard | Monitor GitHub API quota | ✅ |
+| 🏷️ Badge Customization | Custom label, logo, style, logoColor | ✅ |
 | 🧪 Test Suite | Integration tests for all endpoints | ✅ |
 
 ---
@@ -262,7 +275,13 @@ MyLastSeen/
 ├── 📂 api/                            # 🌐 Vercel serverless functions
 │   ├── 📄 lastseen.js                 #    👤 Last seen endpoint (JSON + text)
 │   ├── 📄 badge.js                    #    🏷️ Shields.io badge endpoint
-│   └── 📄 health.js                   #    💚 Health check endpoint
+│   ├── 📄 health.js                   #    💚 Health check endpoint
+│   ├── 📄 batch.js                    #    📦 Batch lookup (up to 10 users)
+│   ├── 📄 score.js                    #    📈 Activity score (0-100)
+│   ├── 📄 history.js                  #    🕐 Event history timeline
+│   ├── 📄 org.js                      #    🏢 Organization last seen
+│   ├── 📄 compare.js                  #    ⚖️ User comparison
+│   └── 📄 rate-limit.js              #    📊 Rate limit dashboard
 │
 ├── 📂 utils/                          # ⚙️ Core logic
 │   ├── 📄 github.js                   #    📡 GitHub API client
@@ -634,6 +653,7 @@ GITHUB_TOKEN=ghp_xxxxx npm start
 
 | Version | Date | Highlights |
 |:---|:---|:---|
+| **2.0.0** | 2026-05-28 | 6 new endpoints (batch, score, history, org, compare, rate-limit), badge customization, landing page upgrades |
 | **1.0.0** | 2026-05-28 | Initial release — JSON, text, badge, health endpoints, Vercel support |
 
 See [CHANGELOG.md](CHANGELOG.md) for full history.
@@ -685,10 +705,12 @@ A: 60 req/hr without a token, 5000 req/hr with one. Cached responses don't count
 ## 🗺️ Roadmap
 
 - [ ] User contribution graph data
-- [ ] Multiple user batch lookup
+- [x] Multiple user batch lookup
 - [ ] Webhook notifications for user activity
 - [ ] Activity streak tracking
 - [ ] GraphQL API support
+- [ ] Redis/Upstash persistent cache
+- [ ] Rate limit dashboard
 
 ---
 
