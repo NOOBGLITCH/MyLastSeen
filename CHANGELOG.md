@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.1.0] — 2026-06-16
+
+### Added
+- `GET /api/repo/:owner/:repo` — Track when someone was last active on a specific repository
+- Returns last activity with user, action, relative time, and emoji
+- Returns top 5 recent contributors with their activity
+- Fun/expressive emojis: 👀 (just now), 🫣 (minutes), 😶 (hours), 😴 (days), 🫥 (weeks)
+
 ## [3.0.0] — 2026-06-16
 
 ### Added

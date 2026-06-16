@@ -5,7 +5,8 @@
     { "source": "/api/lastseen/([^/]+)", "destination": "/api/lastseen?username=$1" },
     { "source": "/api/score/([^/]+)", "destination": "/api/score?username=$1" },
     { "source": "/api/history/([^/]+)", "destination": "/api/history?username=$1" },
-    { "source": "/api/org/([^/]+)/lastseen", "destination": "/api/org?orgname=$1" }
+    { "source": "/api/org/([^/]+)/lastseen", "destination": "/api/org?orgname=$1" },
+    { "source": "/api/repo/([^/]+)/([^/]+)", "destination": "/api/repo-lastseen?owner=$1&repo=$2" }
   ],
   "functions": {
     "api/*.js": { "memory": 256 }
