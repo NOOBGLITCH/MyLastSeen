@@ -1,0 +1,23 @@
+name: Update GitHub Status
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Har 5 minute me
+  workflow_dispatch:        # Manual trigger bhi
+
+jobs:
+  update-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set "Last seen" status
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
+          curl -s -X POST https://api.github.com/graphql \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "query": "mutation { changeUserStatus(input: {message: \"Last seen: '"$TIMESTAMP"'\", emoji: \"🔍\"}) { status { message emoji } } }"
+            }'
+          echo "Status updated: Last seen: $TIMESTAMP"
