@@ -18,8 +18,8 @@
   <img src="https://img.shields.io/badge/Express-5.1-000000?style=flat-square&logo=express&logoColor=white" alt="Express"/>
   <img src="https://img.shields.io/badge/Vercel-Serverless-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel"/>
   <img src="https://img.shields.io/badge/License-MIT-22c55e?style=flat-square&logo=mit&logoColor=white" alt="License"/>
-  <img src="https://img.shields.io/badge/Version-3.0.0-f43f8e?style=flat-square&logoColor=white" alt="Version"/>
-  <img src="https://img.shields.io/badge/Endpoints-11-6366f1?style=flat-square&logoColor=white" alt="Endpoints"/>
+  <img src="https://img.shields.io/badge/Version-3.1.0-f43f8e?style=flat-square&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/Endpoints-12-6366f1?style=flat-square&logoColor=white" alt="Endpoints"/>
 </p>
 
 <p align="center">
@@ -190,6 +190,7 @@ flowchart TD
 | 🏷️ Badge Customization | Custom label, logo, style, logoColor | ✅ |
 | 🔄 Auto Status Update | GitHub Actions workflow for auto-updating profile status | ✅ |
 | 🎯 Profile Status Setter | Set GitHub "What's happening" status via GH_TOKEN | ✅ |
+| 📦 Repo Last Seen | Track activity on a specific repository | ✅ |
 | 🧪 Test Suite | Integration tests for all endpoints | ✅ |
 
 ---
@@ -286,7 +287,8 @@ MyLastSeen/
 │   ├── 📄 org.js                      #    🏢 Organization last seen
 │   ├── 📄 compare.js                  #    ⚖️ User comparison
 │   ├── 📄 rate-limit.js              #    📊 Rate limit dashboard
-│   └── 📄 status.js                   #    🎯 Profile status setter (GH_TOKEN)
+│   ├── 📄 status.js                   #    🎯 Profile status setter (GH_TOKEN)
+│   └── 📄 repo-lastseen.js           #    📦 Repo-specific last seen tracking
 │
 ├── 📂 utils/                          # ⚙️ Core logic
 │   ├── 📄 github.js                   #    📡 GitHub API client
@@ -623,6 +625,49 @@ curl -X POST "https://mylastseen.vercel.app/api/status?token=ghp_xxxxx" \
 
 > 💡 The token needs `user` scope to read/write profile status. Set `GH_TOKEN` env var or pass `?token=` query param.
 
+### `GET /api/repo/:owner/:repo`
+
+Track when someone was last active on a specific repository.
+
+```bash
+curl https://mylastseen.vercel.app/api/repo/Shineii86/MyLastSeen
+```
+
+```json
+{
+  "success": true,
+  "data": {
+    "repo": "Shineii86/MyLastSeen",
+    "lastActivity": {
+      "user": "Shineii86",
+      "action": "pushed code",
+      "eventType": "PushEvent",
+      "timestamp": "2026-06-16T01:12:33Z",
+      "relativeTime": "just now",
+      "emoji": "👀"
+    },
+    "recentContributors": [
+      {
+        "username": "Shineii86",
+        "eventLabel": "pushed code",
+        "relativeTime": "just now",
+        "emoji": "👀"
+      }
+    ]
+  }
+}
+```
+
+**Response Emojis:**
+
+| Timeframe | Emoji |
+|:---|:---|
+| Just now | 👀 |
+| Minutes ago | 🫣 |
+| Hours ago | 😶 |
+| Days ago | 😴 |
+| Weeks ago | 🫥 |
+
 ---
 
 ## 📋 API Response Schema
@@ -773,6 +818,7 @@ jobs:
 
 | Version | Date | Highlights |
 |:---|:---|:---|
+| **3.1.0** | 2026-06-16 | Repo-specific last seen tracking (`/api/repo/:owner/:repo`), fun emojis |
 | **3.0.0** | 2026-06-16 | Profile status setter (`/api/status`), GH_TOKEN support, GitHub Actions auto-update workflow |
 | **2.0.0** | 2026-05-28 | 6 new endpoints (batch, score, history, org, compare, rate-limit), badge customization, landing page upgrades |
 | **1.0.0** | 2026-05-28 | Initial release — JSON, text, badge, health endpoints, Vercel support |
