@@ -20,7 +20,7 @@ jobs:
           from datetime import datetime, timezone
 
           token = os.environ['GH_TOKEN']
-          username = 'Shineii86'
+          username = 'NOOBGLITCH'
 
           # Fetch last event
           req = urllib.request.Request(
