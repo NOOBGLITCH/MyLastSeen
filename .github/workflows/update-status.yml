@@ -17,21 +17,23 @@ jobs:
           import os
           import json
           import urllib.request
+          import urllib.error
           from datetime import datetime, timezone
 
-          token = os.environ['GH_TOKEN']
+          token = os.environ.get('GH_TOKEN', '')
           username = 'NOOBGLITCH'
 
-          # Fetch last event
+          # Fetch last event (no auth needed — public endpoint)
           req = urllib.request.Request(
               f'https://api.github.com/users/{username}/events/public?per_page=1',
-              headers={
-                  'Authorization': f'Bearer {token}',
-                  'Accept': 'application/vnd.github.v3+json'
-              }
+              headers={'Accept': 'application/vnd.github.v3+json'}
           )
-          with urllib.request.urlopen(req) as resp:
-              events = json.loads(resp.read())
+          try:
+              with urllib.request.urlopen(req) as resp:
+                  events = json.loads(resp.read())
+          except urllib.error.HTTPError as e:
+              print(f'❌ Failed to fetch events: HTTP {e.code}')
+              raise SystemExit(1)
 
           if not events:
               status_msg = 'No recent activity'
@@ -81,7 +83,11 @@ jobs:
               action = labels.get(event_type, 'active')
               status_msg = f'Last seen: {relative} ({action})'
 
-          # Set status via GraphQL
+          # Set status via GraphQL (only if token is available)
+          if not token:
+              print(f'⚠️  No GH_TOKEN set — skipping status update. Computed message: {status_msg} {emoji}')
+              raise SystemExit(0)
+
           query = {
               'query': f'mutation {{ changeUserStatus(input: {{message: "{status_msg}", emoji: "{emoji}"}}) {{ status {{ message emoji }} }} }}'
           }
@@ -94,8 +100,11 @@ jobs:
               },
               method='POST'
           )
-          with urllib.request.urlopen(req) as resp:
-              result = json.loads(resp.read())
-
-          print(f'✅ Status: {status_msg} {emoji}')
+          try:
+              with urllib.request.urlopen(req) as resp:
+                  result = json.loads(resp.read())
+              print(f'✅ Status: {status_msg} {emoji}')
+          except urllib.error.HTTPError as e:
+              print(f'❌ GraphQL mutation failed: HTTP {e.code} {e.read().decode()}')
+              raise SystemExit(1)
           EOF
