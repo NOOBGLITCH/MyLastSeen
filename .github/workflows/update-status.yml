@@ -50,7 +50,7 @@ jobs:
 
               if diff < 60:
                   relative = 'just now'
-                  emoji = '👀'
+                  emoji = '🧑🏻‍💻'
               elif diff < 3600:
                   mins = int(diff / 60)
                   relative = f'{mins} minute{"s" if mins > 1 else ""} ago'
